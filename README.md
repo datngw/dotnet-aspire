@@ -13,33 +13,33 @@ The system consists of the following components:
 ```mermaid
 graph TD
     subgraph "Frontend"
-        WebApp[WebApp (Blazor Server)]
+        WebApp["WebApp (Blazor Server)"]
     end
 
     subgraph "Backing Services"
-        Redis[Redis (Cache)]
-        RabbitMQ[RabbitMQ (Event Bus)]
-        Postgres[PostgreSQL (Catalog DB)]
-        Keycloak[Keycloak (Identity)]
-        Ollama[Ollama (AI Models)]
+        Redis["Redis (Cache)"]
+        RabbitMQ["RabbitMQ (Event Bus)"]
+        Postgres["PostgreSQL (Catalog DB)"]
+        Keycloak["Keycloak (Identity)"]
+        Ollama["Ollama (AI Models)"]
     end
 
     subgraph "Services"
-        Catalog[Catalog Service]
-        Basket[Basket Service]
+        Catalog["Catalog Service"]
+        Basket["Basket Service"]
     end
 
     %% Relationships
     WebApp -->|HTTP| Catalog
     WebApp -->|HTTP| Basket
-    WebApp -->|Redis| Redis
+    WebApp -->|Output Cache| Redis
     
     Catalog -->|PostgreSQL| Postgres
     Catalog -->|Publish| RabbitMQ
-    Catalog -->|AI/Embeddings| Ollama
+    Catalog -->|"AI/Embeddings"| Ollama
     
-    Basket -->|Redis| Redis
-    Basket -->|Publish| RabbitMQ
+    Basket -->|Distributed Cache| Redis
+    Basket -->|Subscribe| RabbitMQ
     Basket -->|Auth| Keycloak
     Basket -->|HTTP| Catalog
 ```
