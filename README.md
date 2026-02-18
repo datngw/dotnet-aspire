@@ -98,12 +98,25 @@ Ensure you have the following installed to run the solution:
 
 ```text
 eshop-distributed/
-├── AppHost/            # .NET Aspire Orchestrator
-├── ServiceDefaults/    # Shared defaults (Telemetry, HealthChecks)
-├── WebApp/             # Blazor Server Frontend
-├── Catalog/            # Catalog Microservice (API)
-├── Basket/             # Basket Microservice (API)
-└── ...
+├── AppHost/                # .NET Aspire Orchestrator
+│   └── Program.cs          # Service registration & orchestration
+├── ServiceDefaults/        # Shared defaults (OpenTelemetry, HealthChecks)
+│   └── Extensions.cs       # Cross-cutting concerns configuration
+├── WebApp/                 # Blazor Server Frontend
+│   ├── ApiClients/         # Typed HTTP clients for backend services
+│   ├── Components/         # Blazor UI components & pages
+│   ├── Services/           # Frontend business logic
+│   └── wwwroot/            # Static assets (CSS, JS, images)
+├── Catalog/                # Product Service (Minimal API)
+│   ├── Data/               # Database context & migrations (PostgreSQL)
+│   ├── Endpoints/          # API route definitions
+│   ├── Models/             # Domain entities & DTOs
+│   └── Services/           # Business logic & AI integration
+└── Basket/                 # Basket Service (Minimal API)
+    ├── Endpoints/          # API route definitions
+    ├── EventHandlers/      # RabbitMQ event consumers
+    ├── Models/             # Domain entities (Redis)
+    └── Services/           # Business logic
 ```
 
 ## References
